@@ -17,6 +17,20 @@ class PostsController < ApplicationController
     @post=Post.new
   end
 
+  def destroy
+    @post=Post.find(params[:id])
+    if current_user.id!=@post.user_id
+      render :show, status: :unauthorized
+      return
+    end
+
+    if @post.destroy
+      redirect_to posts_path
+    else
+      render :show, status: :unprocessable_entity
+    end
+  end
+
   def show
     @post=Post.find(params[:id])
   end
