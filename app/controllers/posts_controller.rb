@@ -1,5 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_post, only: %i[show edit update destroy]
+
   def index
     @posts=Post.all
   end
@@ -14,7 +16,6 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post=Post.find(params[:id])
     if current_user.id!=@post.user_id
       render :show, status: :unauthorized
     end
@@ -25,7 +26,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post=Post.find(params[:id])
     if current_user.id!=@post.user_id
       render :show, status: :unauthorized
       return
@@ -38,7 +38,6 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post=Post.find(params[:id])
     if current_user.id!=@post.user_id
       render :show, status: :unauthorized
       return
@@ -52,10 +51,15 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post=Post.find(params[:id])
   end
+
+  private
 
   def post_params
     params.require(:post).permit(:subject, :content)
+  end
+
+  def set_post
+    @post=Post.find(params[:id])
   end
 end
