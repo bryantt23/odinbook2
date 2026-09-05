@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_post, only: %i[show edit update destroy]
+  before_action :check_for_correct_post_author, only: %i[edit update destroy]
 
   def index
     @posts=Post.all
@@ -16,9 +17,6 @@ class PostsController < ApplicationController
   end
 
   def edit
-    if current_user.id!=@post.user_id
-      render :show, status: :unauthorized
-    end
   end
 
   def new
@@ -26,10 +24,6 @@ class PostsController < ApplicationController
   end
 
   def update
-    if current_user.id!=@post.user_id
-      render :show, status: :unauthorized
-      return
-    end
     if @post.update(post_params)
       redirect_to @post
     else
@@ -38,11 +32,6 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    if current_user.id!=@post.user_id
-      render :show, status: :unauthorized
-      return
-    end
-
     if @post.destroy
       redirect_to posts_path
     else
@@ -54,6 +43,12 @@ class PostsController < ApplicationController
   end
 
   private
+
+  def check_for_correct_post_author
+    if current_user.id!=@post.user_id
+      render :show, status: :unauthorized
+    end
+  end
 
   def post_params
     params.require(:post).permit(:subject, :content)
