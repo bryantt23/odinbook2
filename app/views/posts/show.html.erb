@@ -2,11 +2,21 @@
 
 <p><%= @post.content %></p>
 
+<p>
+    Likes: <%= @post.likes.count %>
+</p>
+
+<% if @post.likes.any?{|like| like.user_id == current_user.id && like.post_id==@post.id}%>
+    Liked
+<% else %>
+    <%= button_to "Like", post_likes_path(@post), method: :post %>
+<% end %>
+
+
 <% if @post.user_id == current_user.id %>
     <%= button_to "Delete Post", post_path(@post), method: :delete, data: {turbo_confirm: "Are you sure you want to delete the post?"} %>
     <%= link_to "Edit Post", edit_post_path(@post) %>
 <% end %>
-
 
 <h2>Comments</h2>
 
@@ -16,9 +26,6 @@
     <%= f.submit %>
 <% end %>
 
-<p>
-    Likes: <%= @post.likes.count %>
-</p>
 
 <ul>
     <% @post.comments.each do |comment| %>
