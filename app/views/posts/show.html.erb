@@ -16,6 +16,10 @@
     <%= f.submit %>
 <% end %>
 
+<p>
+    Likes: <%= @post.likes.count %>
+</p>
+
 <ul>
     <% @post.comments.each do |comment| %>
         <li><%= comment.content %> by <%= comment.user.email %></li>
