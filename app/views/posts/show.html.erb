@@ -6,7 +6,7 @@
     Likes: <%= @post.likes.count %>
 </p>
 
-<% if @post.likes.any?{|like| like.user_id == current_user.id && like.post_id==@post.id}%>
+<% if @post.likes.where(user_id:current_user.id).exists? %>
     Liked
 <% else %>
     <%= button_to "Like", post_likes_path(@post), method: :post %>
