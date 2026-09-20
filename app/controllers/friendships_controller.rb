@@ -1,11 +1,11 @@
-class FriendshipController < ApplicationController
+class FriendshipsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    binding.break
-    @friendship=current_user.friendships.build(params[:friend_id])
+    @user=User.find(current_user.id)
+    @friendship=current_user.friendships.build(friend_id: params[:friend_id])
 
-    if @like.save
+    if @friendship.save
       redirect_to @user, notice: "Added friend"
     else
       redirect_to @user, alert: "Could not add friend"
