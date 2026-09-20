@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_09_20_200234) do
+ActiveRecord::Schema[8.0].define(version: 2026_09_20_212249) do
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "post_id", null: false
@@ -22,10 +22,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_20_200234) do
   end
 
   create_table "friendships", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "friend_id"
+    t.integer "user_id", null: false
+    t.integer "friend_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["user_id", "friend_id"], name: "index_friendships_on_user_id_and_friend_id", unique: true
   end
 
   create_table "likes", force: :cascade do |t|
@@ -61,6 +62,8 @@ ActiveRecord::Schema[8.0].define(version: 2026_09_20_200234) do
 
   add_foreign_key "comments", "posts"
   add_foreign_key "comments", "users"
+  add_foreign_key "friendships", "users"
+  add_foreign_key "friendships", "users", column: "friend_id"
   add_foreign_key "likes", "posts"
   add_foreign_key "likes", "users"
   add_foreign_key "posts", "users"
