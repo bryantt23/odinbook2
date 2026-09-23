@@ -18,3 +18,12 @@
         </li>
     <% end %>
 </ul>
+    
+<h2>Followers</h2>
+<ul>
+    <% @user.inverse_friends.each do |user| %>
+        <li>
+            <%= user.email %>
+        </li>
+    <% end %>
+</ul>
