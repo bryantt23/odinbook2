@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
   def show
     @user=User.find(params[:id])
-    @non_friend_ids= Friendship.where(user_id: current_user.id).pluck(:friend_id)
-    @non_friend_ids.push(current_user.id)
-    @non_friends=User.where.not(id: @non_friend_ids)
+    @friend_ids=@user.friendships.pluck(:friend_id)
+    @non_friend_ids=User.where.not(id: @friend_ids).where.not(id: @user.id).pluck(:id)
+    @non_friends=User.where(id: @non_friend_ids)
   end
 
   def index
