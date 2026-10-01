@@ -24,6 +24,9 @@
     <% @non_friends.each do |user| %>
         <li>
             <%= user.email %> 
+            <% if current_user == @user %>
+                <%= button_to "Follow", friendships_path, method: :post, params: { friend_id: user.id } %>
+            <% end %>
         </li>
     <% end %>
 </ul>
