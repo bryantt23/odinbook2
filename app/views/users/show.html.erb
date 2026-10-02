@@ -1,7 +1,7 @@
 <h1>Users</h1>
 <p>User email: <%= @user.email %></p>
 
-<h2>Following</h2>
+<h2>Following: <%= @user.friendships.count %></h2>
 <ul>
     <% @user.friendships.each do |friendship| %>
         <li>
@@ -10,7 +10,7 @@
     <% end %>
 </ul>
     
-<h2>Followers</h2>
+<h2>Followers: <%= @user.inverse_friends.count %></h2>
 <ul>
     <% @user.inverse_friends.each do |user| %>
         <li>
