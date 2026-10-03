@@ -4,7 +4,7 @@ class PostsController < ApplicationController
   before_action :check_for_correct_post_author, only: %i[edit update destroy]
 
   def index
-    @posts=Post.all
+    @posts=Post.where(user: current_user).or(Post.where(user: current_user.friendships.pluck(:friend_id))).order(created_at: :desc)
   end
 
   def create
