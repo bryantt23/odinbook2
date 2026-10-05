@@ -30,3 +30,13 @@
         </li>
     <% end %>
 </ul>
+
+<h2>User Posts</h2>
+
+<ul>
+    <% @posts.each do |post| %>
+        <li>
+            <%= link_to post.subject, post_path(post) %>
+        </li>
+    <% end %>
+</ul>
