@@ -1,5 +1,6 @@
-<h1>Users</h1>
+<h1>User</h1>
 <p>User email: <%= @user.email %></p>
+<%= gravatar_for @user %>
 
 <h2>Following: <%= @user.friendships.count %></h2>
 <ul>
