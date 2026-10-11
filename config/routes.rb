@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+
   resources :posts do
     resources :comments, only: [ :create ]
     resources :likes, only: [ :create ]
@@ -26,4 +29,5 @@ Rails.application.routes.draw do
     end
   end
   # Defines the root path route ("/")
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
 end
