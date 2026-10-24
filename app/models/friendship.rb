@@ -3,6 +3,7 @@ class Friendship < ApplicationRecord
   belongs_to :friend, class_name: "User"
 
   validate :cant_friend_self
+  validates :friend_id, uniqueness: { scope: :user_id }
 
   private
   def cant_friend_self
