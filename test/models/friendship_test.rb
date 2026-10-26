@@ -15,6 +15,7 @@ class FriendshipTest < ActiveSupport::TestCase
     friendship = user1.friendships.build(friend_id: user2.id)
     assert friendship.valid?
     assert_equal user2.id, friendship.friend_id
+    assert_equal user1.id, friendship.user_id
     friendship.save
 
     friendship2 = user1.friendships.build(friend_id: user2.id)
